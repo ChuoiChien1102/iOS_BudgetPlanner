@@ -1,0 +1,9 @@
+ib:
+  inputs: BudgetPlanner/Application/Main.storyboard
+  outputs:
+    - templateName: scenes-swift4
+      output: BudgetPlanner/Generated/Storyboards/Storyboards.swift
+
+
+
+
