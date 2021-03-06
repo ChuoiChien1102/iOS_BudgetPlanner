@@ -12,6 +12,7 @@ final class NavigationBar: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var rightButton: UIButton!
     
+    @IBOutlet weak var widthRightButtonContraint: NSLayoutConstraint!
     override func awakeFromNib() {
         initWithNib()
     }

@@ -82,3 +82,18 @@ extension SelectedViewController {
         return vc
     }
 }
+
+final class AddVariantViewControllerAssembly: Assembly {
+    func assemble(container: Container) {
+        container.register(AddVariantViewController.self) { _ in
+            let vc = StoryboardScene.Main.addVariantViewController.instantiate()
+            return vc
+        }
+    }
+}
+extension AddVariantViewController {
+    static func newInstance() -> AddVariantViewController {
+        let vc =  Container.shareResolver.resolve(AddVariantViewController.self)!
+        return vc
+    }
+}

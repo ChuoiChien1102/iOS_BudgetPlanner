@@ -23,21 +23,6 @@ class MonthDetailCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func configIncomeCell(item: MonthExpenses) -> Void {
-        name.text = "Income"
-        total.text = item.income + " $"
-        total.textColor = UIColor.init(hex: "#4FBE40")
-        leftIcon.image = UIImage(named: "ic_up_green")
-        leftIcon.isHidden = false
-    }
-    func configExpensesCell(item: MonthExpenses) -> Void {
-        name.text = "Expenses"
-        total.text = item.expenses + " $"
-        total.textColor = .red
-        leftIcon.image = UIImage(named: "ic_down_red")
-        leftIcon.isHidden = false
-    }
     func configStartingCell(item: MonthExpenses) -> Void {
         name.text = "Starting"
         total.text = item.starting + " $"

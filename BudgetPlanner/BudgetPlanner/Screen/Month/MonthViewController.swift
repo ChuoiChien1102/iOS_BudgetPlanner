@@ -19,14 +19,13 @@ class MonthViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-//        NotificationCenter.default.addObserver(self, selector: #selector(createPlanSuccess(_:)), name: NSNotification.Name(rawValue: NotificationCenterName.createPlanSuccess), object: nil)
-        
         navigationBar.titleLabel.text = expensesMonth.month
         navigationBar.leftButton.isHidden = false
         navigationBar.backLabel.isHidden = false
-        navigationBar.rightButton.isHidden = true
-        
+        navigationBar.rightButton.isHidden = false
+        navigationBar.rightButton.setTitle("Add variant", for: .normal)
         navigationBar.leftButton.addTarget(self, action: #selector(clickBack(sender:)), for: UIControl.Event.touchUpInside)
+        navigationBar.rightButton.addTarget(self, action: #selector(addMonthVariant(sender:)), for: UIControl.Event.touchUpInside)
         
         // tableView
         tableView.registerCellNib(TitleCell.self)
@@ -34,7 +33,6 @@ class MonthViewController: BaseViewController {
         tableView.registerCellNib(BudgetTotalCell.self)
         tableView.registerCellNib(AssetDetailCell.self)
         tableView.separatorStyle = .none
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +117,7 @@ class MonthViewController: BaseViewController {
     }
     
     @IBAction func addAsset(_ sender: Any) {
-        let ac = UIAlertController(title: "Asset Name", message: "A message should be a short, complete sentence", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Group Name", message: "Please name your payment", preferredStyle: .alert)
         ac.addTextField()
         
         let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
@@ -129,7 +127,7 @@ class MonthViewController: BaseViewController {
             let textField = ac.textFields![0]
             let name = textField.text!.trimSpace()
             if (name == "") {
-                Common.showAlert(content: "Please fill name!")
+                self.showAlert(title: "Alert", content: "Please name your payment!")
                 return
             }
             let vc = PaymentViewController.newInstance()
@@ -150,47 +148,11 @@ class MonthViewController: BaseViewController {
 extension MonthViewController {
     
     @objc func addMonthVariant(sender: UIButton!) {
-        var listAssetCopy = [Asset]()
-        for asset in listAsset {
-            let newAsset = Asset()
-            newAsset.name = asset.name
-            newAsset.parentID = asset.parentID
-            newAsset.payments = asset.payments
-            listAssetCopy.append(newAsset)
-        }
-        LoadingManager.show(in: self)
-        for asset in listAssetCopy {
-            for pay in asset.payments {
-                let newPay = Payment()
-                newPay.name = pay.name
-                newPay.imageName = pay.imageName
-                newPay.type = pay.type
-                newPay.typeName = pay.typeName
-                newPay.startDay = pay.startDay
-                newPay.startMonth = expensesMonth.indexMonth
-                newPay.startYear = pay.startYear
-                newPay.isRecuring = false
-                newPay.starting = pay.starting
-                newPay.ending = pay.ending
-                newPay.total = pay.total
-                
-                let plan = Plan()
-                plan.name = planParent.name + " copy"
-                let newAsset = Asset()
-                newAsset.name = asset.name
-                newAsset.payments = [newPay]
-                plan.assets = [newAsset]
-                DatabaseRealmManager.shared.createPlan(plan: plan)
-            }
-        }
-        LoadingManager.hide()
-        navigationController?.popViewController(animated: true)
+        let vc = AddVariantViewController.newInstance()
+        vc.planParent = planParent
+        vc.expensesMonth = expensesMonth
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
-//    @objc func createPlanSuccess(_ notification: Notification) {
-//        navigationController?.popViewController(animated: true)
-//    }
-    
     func checkPaymentIsInMonth(pay: Payment) -> Bool {
         if !pay.isRecuring {
             if pay.startMonth == expensesMonth.indexMonth  && pay.startYear == expensesMonth.year {
@@ -209,10 +171,22 @@ extension MonthViewController {
             }
         }
     }
+    
+    func showAlert(title: String, content: String) {
+        let ac = UIAlertController(title: title, message: content, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "Ok", style: .default) { _ in
+            
+        }
+        ac.addAction(actionOK)
+        present(ac, animated: true)
+    }
 }
 
 extension MonthViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
+        if listAsset.count == 0 {
+            return 1
+        }
         return 2
     }
     
@@ -235,7 +209,6 @@ extension MonthViewController: UITableViewDelegate, UITableViewDataSource {
             } else if indexPath.row == listPayment.count + 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: String.className(BudgetTotalCell.self)) as! BudgetTotalCell
                 cell.configCell(expenses: expensesMonth)
-                cell.btnAddMonthVariant.addTarget(self, action: #selector(addMonthVariant(sender:)), for: UIControl.Event.touchUpInside)
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: String.className(BudgetDetailCell.self)) as! BudgetDetailCell
@@ -247,7 +220,7 @@ extension MonthViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 {
                 // Cell title
                 let cell = tableView.dequeueReusableCell(withIdentifier: String.className(TitleCell.self)) as! TitleCell
-                cell.configCell(name: "Asset")
+                cell.configCell(name: "Groups")
                 return cell
             }  else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: String.className(AssetDetailCell.self)) as! AssetDetailCell
@@ -264,7 +237,7 @@ extension MonthViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 {
                 return 30
             } else if indexPath.row == listPayment.count + 1 {
-                return 210
+                return 152
             } else {
                 return 46
             }

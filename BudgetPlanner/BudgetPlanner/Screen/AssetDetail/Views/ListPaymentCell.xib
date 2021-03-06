@@ -19,16 +19,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-5000 $" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbt-nI-p8u">
-                        <rect key="frame" x="246.5" y="13" width="63.5" height="20.5"/>
+                        <rect key="frame" x="246.5" y="12.5" width="63.5" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="120" id="5Ys-OA-scy"/>
+                            <constraint firstAttribute="height" constant="21" id="LSR-T7-419"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" systemColor="systemRedColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shop" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKw-Rm-CTA">
-                        <rect key="frame" x="10" y="13" width="40" height="20.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="Q0T-4u-vqg"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Shop" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKw-Rm-CTA">
+                        <rect key="frame" x="10" y="13" width="231.5" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -45,6 +46,7 @@
                 <constraints>
                     <constraint firstItem="TTp-RI-lvw" firstAttribute="leading" secondItem="8ae-ZV-8Y0" secondAttribute="leading" id="Liu-ta-k3R"/>
                     <constraint firstAttribute="trailing" secondItem="TTp-RI-lvw" secondAttribute="trailing" id="NRr-CH-jzh"/>
+                    <constraint firstItem="tbt-nI-p8u" firstAttribute="leading" secondItem="dKw-Rm-CTA" secondAttribute="trailing" constant="5" id="XyB-na-VMa"/>
                     <constraint firstItem="tbt-nI-p8u" firstAttribute="centerY" secondItem="8ae-ZV-8Y0" secondAttribute="centerY" id="cpJ-mW-r5Z"/>
                     <constraint firstItem="dKw-Rm-CTA" firstAttribute="leading" secondItem="8ae-ZV-8Y0" secondAttribute="leading" constant="10" id="giw-2K-9hb"/>
                     <constraint firstAttribute="trailing" secondItem="tbt-nI-p8u" secondAttribute="trailing" constant="10" id="i1J-ql-pZu"/>

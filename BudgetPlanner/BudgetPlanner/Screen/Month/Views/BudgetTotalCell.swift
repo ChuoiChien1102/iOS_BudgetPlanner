@@ -14,8 +14,6 @@ class BudgetTotalCell: UITableViewCell {
     @IBOutlet weak var lbStart: UILabel!
     @IBOutlet weak var lbEnd: UILabel!
     
-    @IBOutlet weak var btnAddMonthVariant: UIButton!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

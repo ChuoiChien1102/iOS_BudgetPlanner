@@ -76,6 +76,9 @@ let IS_IPHONE_XR_XSMAX_11 = (WIDTH_DEVICE == 414) && (HEIGHT_DEVICE == 896) && I
 let KEY_IS_SKIP = "Skip"
 let KEY_IS_PREMIUM = "Premium"
 let KEY_BALANCE = "Balance"
+let KEY_NUMBER_VARIANT = "Number_Variant"
+let KEY_INFINITY = "∞"
+let VALUE_INFINITY = "01/01/2050"
 
 struct IS_DONATE_COIN_NEWDAY {
     static var IS_DONATE = false
@@ -108,7 +111,10 @@ struct NotificationCenterName {
     static let createAssetSuccess = "createAssetSuccess"
     static let createPaymentSuccess = "createPaymentSuccess"
     static let updatePaymentSuccess = "updatePaymentSuccess"
+    static let updateAssetSuccess = "updateAssetSuccess"
     static let deletePlanSuccess = "deletePlanSuccess"
+    static let deleteAssetSuccess = "deleteAssetSuccess"
+    static let deletePaymentSuccess = "deletePaymentSuccess"
 }
 
 struct CategoryType {

@@ -20,7 +20,12 @@ extension Date {
         let dayComponent = calendar.component(.day, from: day)
         return String(dayComponent)
     }
-    
+    func getMonthNow() -> String {
+        let month = Calendar(identifier: .gregorian).date(byAdding: .month, value: 0, to: self)!
+        let calendar = Calendar(identifier: .gregorian)
+        let monthComponent = calendar.component(.month, from: month)
+        return String(monthComponent)
+    }
     func getNextMonth() -> String {
         let todayOfNext = Calendar(identifier: .gregorian).date(byAdding: .day, value: 0, to: self)!
         let nextMonth = Calendar(identifier: .gregorian).date(byAdding: .month, value: 1, to: self)!
@@ -207,6 +212,16 @@ extension Date {
         let month = String(calendar.component(.month, from: date))
         let day = String(calendar.component(.day, from: date))
         return (year, month, day)
+    }
+    
+    func toString(formater: String) -> String {
+        let  dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar(identifier: .iso8601)
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        dateFormatter.dateFormat = formater
+        return dateFormatter.string(from: self)
     }
 }
 

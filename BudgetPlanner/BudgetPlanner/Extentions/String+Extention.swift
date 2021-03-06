@@ -30,7 +30,9 @@ extension String {
         }
         return str
     }
-    
+    func toInt() -> Int {
+        return Int(self) ?? 0
+    }
     func addPoints(_ inputNumber: String) -> String {
         var number = inputNumber
         var count = 0

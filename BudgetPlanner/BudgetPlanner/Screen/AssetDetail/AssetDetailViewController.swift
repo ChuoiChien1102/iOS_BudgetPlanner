@@ -19,14 +19,19 @@ class AssetDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        navigationBar.titleLabel.text = asset.name
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteAssetSuccess(_:)), name: NSNotification.Name(rawValue: NotificationCenterName.deleteAssetSuccess), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deletePaymentSuccess(_:)), name: NSNotification.Name(rawValue: NotificationCenterName.deletePaymentSuccess), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateAssetSuccess(_:)), name: NSNotification.Name(rawValue: NotificationCenterName.updateAssetSuccess), object: nil)
+        navigationBar.titleLabel.text = "Group: " + asset.name
         navigationBar.leftButton.isHidden = false
         navigationBar.backLabel.isHidden = false
-        navigationBar.rightButton.isHidden = true
-        
+        navigationBar.rightButton.isHidden = false
+        navigationBar.rightButton.setTitle("Remove", for: .normal)
         navigationBar.leftButton.addTarget(self, action: #selector(clickBack(sender:)), for: UIControl.Event.touchUpInside)
-        
+        navigationBar.rightButton.addTarget(self, action: #selector(removeAsset(sender:)), for: UIControl.Event.touchUpInside)
+        let tapCategoryRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(changeAssetName(_:)))
+        tapCategoryRecognizer.cancelsTouchesInView = false
+        self.navigationBar.titleLabel.addGestureRecognizer(tapCategoryRecognizer)
         // tableView
         tableView.registerCellNib(ListPaymentCell.self)
         tableView.separatorStyle = .none
@@ -44,7 +49,7 @@ class AssetDetailViewController: BaseViewController {
             lbTotal.textColor = .red
         }
         lbTotal.text = String(sum) + " $"
-        
+        updateUIButtonRemove()
         tableView.reloadData()
     }
     
@@ -78,6 +83,63 @@ extension AssetDetailViewController {
         }
         return sum
     }
+    
+    @objc func removeAsset(sender: UIButton!) {
+        updateUIButtonRemove()
+        if(self.tableView.isEditing == true)
+        {
+            self.tableView.isEditing = false
+            navigationBar.rightButton.setTitle("Remove", for: .normal)
+        }
+        else
+        {
+            self.tableView.isEditing = true
+            navigationBar.rightButton.setTitle("Done", for: .normal)
+        }
+    }
+    func updateUIButtonRemove() {
+        if asset.payments.count == 0 {
+            navigationBar.rightButton.isEnabled = false
+            navigationBar.rightButton.setTitleColor(.gray, for: .normal)
+        } else {
+            navigationBar.rightButton.isEnabled = true
+            navigationBar.rightButton.setTitleColor(.white, for: .normal)
+        }
+    }
+    
+    @objc func changeAssetName(_ sender: UITapGestureRecognizer) -> Void {
+        let ac = UIAlertController(title: "Group Name", message: "Change group name", preferredStyle: .alert)
+        ac.addTextField()
+        
+        let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+            // do something
+        }
+        let actionOK = UIAlertAction(title: "Change", style: .default) { [unowned ac] _ in
+            let textField = ac.textFields![0]
+            let name = textField.text!.trimSpace()
+            if (name == "") {
+                self.showAlert(title: "Alert", content: "Please name your group!")
+                return
+            }
+            self.navigationBar.titleLabel.text = "Group: " + name
+            self.asset.name = name
+            LoadingManager.show(in: self)
+            DatabaseRealmManager.shared.editAssetName(newAsset: self.asset)
+        }
+        
+        ac.addAction(actionCancle)
+        ac.addAction(actionOK)
+        present(ac, animated: true)
+    }
+    
+    func showAlert(title: String, content: String) {
+        let ac = UIAlertController(title: title, message: content, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "Ok", style: .default) { _ in
+            
+        }
+        ac.addAction(actionOK)
+        present(ac, animated: true)
+    }
 }
 
 extension AssetDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -96,7 +158,7 @@ extension AssetDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-       return 46
+        return 46
     }
     
     //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -112,5 +174,42 @@ extension AssetDetailViewController: UITableViewDelegate, UITableViewDataSource 
         vc.expensesMonth = expensesMonth
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let payment = self.asset.payments[indexPath.row]
+            
+            let ac = UIAlertController(title: "Alert", message: "Are you sure want to delete this transaction(" + payment.name + ")?", preferredStyle: .alert)
+            
+            let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+                // do something
+            }
+            actionCancle.setValue(UIColor.red, forKey: "titleTextColor")
+            let actionOK = UIAlertAction(title: "Yes", style: .default) { _ in
+                LoadingManager.show(in: self)
+                DatabaseRealmManager.shared.removePayment(id: payment.id)
+                self.asset.payments.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            actionOK.setValue(UIColor.blue, forKey: "titleTextColor")
+            ac.addAction(actionOK)
+            ac.addAction(actionCancle)
+            present(ac, animated: true)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
 }
 
+extension AssetDetailViewController {
+    @objc func deleteAssetSuccess(_ notification: Notification) {
+        LoadingManager.hide()
+    }
+    @objc func deletePaymentSuccess(_ notification: Notification) {
+        LoadingManager.hide()
+        updateUIButtonRemove()
+    }
+    @objc func updateAssetSuccess(_ notification: Notification) {
+        LoadingManager.hide()
+    }
+}

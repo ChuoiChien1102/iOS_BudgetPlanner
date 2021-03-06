@@ -9,6 +9,7 @@
 import UIKit
 
 class MonthExpenses: NSObject {
+    var tag = 0 // 0 is title cell, 1 is different cell, 2 is display starting, ending, 3 is button viewExpenses
     var indexMonth = ""
     var month = ""
     var year = ""

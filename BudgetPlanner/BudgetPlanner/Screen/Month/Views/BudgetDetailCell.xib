@@ -36,6 +36,9 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-5000 $" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3H-Nq-QuT">
                         <rect key="frame" x="196.5" y="5" width="63.5" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="WHr-zJ-0Pm"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" systemColor="systemRedColor"/>
                         <nil key="highlightedColor"/>
@@ -46,11 +49,8 @@
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shop" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAS-lb-DXt">
-                        <rect key="frame" x="55" y="13" width="40" height="20.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="NhE-NN-LEN"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Shop" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAS-lb-DXt">
+                        <rect key="frame" x="55" y="13" width="141.5" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -68,6 +68,7 @@
                     <constraint firstItem="r02-1Y-iLB" firstAttribute="leading" secondItem="O3H-Nq-QuT" secondAttribute="trailing" constant="4" id="i8g-Xg-uEX"/>
                     <constraint firstItem="Qvx-2s-uo3" firstAttribute="trailing" secondItem="O3H-Nq-QuT" secondAttribute="trailing" id="nJA-Du-2dx"/>
                     <constraint firstItem="AAS-lb-DXt" firstAttribute="leading" secondItem="Ggm-2w-JGA" secondAttribute="trailing" constant="15" id="rAu-xK-xY8"/>
+                    <constraint firstItem="O3H-Nq-QuT" firstAttribute="leading" secondItem="AAS-lb-DXt" secondAttribute="trailing" id="ros-QE-omp"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

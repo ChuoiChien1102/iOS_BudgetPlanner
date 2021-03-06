@@ -23,6 +23,7 @@ extension Container {
         AssetDetailViewControllerAssembly(),
         PaymentViewControllerAssembly(),
         SelectedViewControllerAssembly(),
+        AddVariantViewControllerAssembly(),
         
         ]).resolver
 }

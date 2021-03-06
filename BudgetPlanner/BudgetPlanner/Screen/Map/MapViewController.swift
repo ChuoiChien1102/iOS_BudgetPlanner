@@ -21,12 +21,27 @@ class MapViewController: BaseViewController {
     
     var listPlan = [Plan]()
     var planSelected = Plan()
-    var listMonthExpensesInYear = [MonthExpenses]()
+    var listMonthExpensesInYear1 = [MonthExpenses]()
+    var listMonthExpensesInYear2 = [MonthExpenses]()
+    var listMonthExpensesInYear3 = [MonthExpenses]()
+    var listMonthExpensesInYear4 = [MonthExpenses]()
+    var listMonthExpensesInYear5 = [MonthExpenses]()
+    var listMonthExpensesInYear6 = [MonthExpenses]()
+    var listMonthExpensesInYear7 = [MonthExpenses]()
+    var listMonthExpensesInYear8 = [MonthExpenses]()
+    var listMonthExpensesInYear9 = [MonthExpenses]()
+    var listMonthExpensesInYear10 = [MonthExpenses]()
+    var listMonthExpensesInYear11 = [MonthExpenses]()
+    var listMonthExpensesInYear12 = [MonthExpenses]()
+    var listMonthExpensesInYear13 = [MonthExpenses]()
+    var listMonthExpensesInYear14 = [MonthExpenses]()
+    
     var listAllMonthExpensesInMap = [MonthExpenses]()
     // simple line with custom x axis labels
     var xLabels = [String]()
     var listAllYearInMap = [String]()
     var indexYearSelected = 3
+    var indexMonthSelected = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +52,8 @@ class MapViewController: BaseViewController {
         navigationBar.leftButton.isHidden = true
         navigationBar.backLabel.isHidden = true
         navigationBar.rightButton.isHidden = true
+        // init indexMonthSelected
+        indexMonthSelected = Int(Date().getMonthNow())! - 1
         
         NotificationCenter.default.addObserver(self, selector: #selector(createPlanSuccess(_:)), name: NSNotification.Name(rawValue: NotificationCenterName.createPlanSuccess), object: nil)
         let listPastYear = Date().getArrayPastYearFromNow(toYear: -3)
@@ -51,7 +68,7 @@ class MapViewController: BaseViewController {
         
         // create xLabels
         for year in listAllYearInMap {
-            let label1 = "Jan" + year
+            let label1 = "Jan " + year
             let label2 = "Feb"
             let label3 = "Mar"
             let label4 = "Apr"
@@ -77,6 +94,8 @@ class MapViewController: BaseViewController {
             xLabels.append(label12)
         }
         // tableView
+        tableView.registerCellNib(HeaderSection.self)
+        tableView.registerCellNib(DifferenceCell.self)
         tableView.registerCellNib(MonthTitleCell.self)
         tableView.registerCellNib(MonthDetailCell.self)
         tableView.registerCellNib(ViewExpensesCell.self)
@@ -112,8 +131,47 @@ class MapViewController: BaseViewController {
             planSelected = listPlan.first!
             let listAsset = DatabaseRealmManager.shared.listAllAssetOfPlan(planID: planSelected.id)
             listAllMonthExpensesInMap = getAllMonthExpensesInMap(listAsset: listAsset)
-            listMonthExpensesInYear = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
-                return monthExpenses.year == listAllYearInMap[indexYearSelected]
+            listMonthExpensesInYear1 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[0]
+            })
+            listMonthExpensesInYear2 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[1]
+            })
+            listMonthExpensesInYear3 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[2]
+            })
+            listMonthExpensesInYear4 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[3]
+            })
+            listMonthExpensesInYear5 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[4]
+            })
+            listMonthExpensesInYear6 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[5]
+            })
+            listMonthExpensesInYear7 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[6]
+            })
+            listMonthExpensesInYear8 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[7]
+            })
+            listMonthExpensesInYear9 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[8]
+            })
+            listMonthExpensesInYear10 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[9]
+            })
+            listMonthExpensesInYear11 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[10]
+            })
+            listMonthExpensesInYear12 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[11]
+            })
+            listMonthExpensesInYear13 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[12]
+            })
+            listMonthExpensesInYear14 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+                return monthExpenses.year == listAllYearInMap[13]
             })
             // bin data view Map
             for plan in listPlan {
@@ -121,6 +179,7 @@ class MapViewController: BaseViewController {
                 let data = binDataMap(listAsset: listAsset)
                 lineChart.addLine(data)
             }
+            scrollToCell(row: indexMonthSelected, section: indexYearSelected)
             tableView.reloadData()
         }
     }
@@ -186,10 +245,48 @@ class MapViewController: BaseViewController {
         planSelected = listPlan.first!
         let listAsset = DatabaseRealmManager.shared.listAllAssetOfPlan(planID: planSelected.id)
         listAllMonthExpensesInMap = getAllMonthExpensesInMap(listAsset: listAsset)
-        listMonthExpensesInYear = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
-            return monthExpenses.year == listAllYearInMap[indexYearSelected]
+        listMonthExpensesInYear1 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[0]
         })
-
+        listMonthExpensesInYear2 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[1]
+        })
+        listMonthExpensesInYear3 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[2]
+        })
+        listMonthExpensesInYear4 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[3]
+        })
+        listMonthExpensesInYear5 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[4]
+        })
+        listMonthExpensesInYear6 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[5]
+        })
+        listMonthExpensesInYear7 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[6]
+        })
+        listMonthExpensesInYear8 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[7]
+        })
+        listMonthExpensesInYear9 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[8]
+        })
+        listMonthExpensesInYear10 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[9]
+        })
+        listMonthExpensesInYear11 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[10]
+        })
+        listMonthExpensesInYear12 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[11]
+        })
+        listMonthExpensesInYear13 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[12]
+        })
+        listMonthExpensesInYear14 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[13]
+        })
         tableView.reloadData()
     }
 }
@@ -469,7 +566,7 @@ extension MapViewController: LineChartDelegate {
         }
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
-            let contentOffset = CGPoint(x: Int(self.lineChart.widthPerItemX) * 12 * (self.indexYearSelected), y: 0)
+            let contentOffset = CGPoint(x: Int(self.lineChart.widthPerItemX) * (12 * (self.indexYearSelected) + self.indexMonthSelected), y: 0)
             self.scrollView.setContentOffset(contentOffset, animated: true)
         }
         drawYAxis()
@@ -479,87 +576,231 @@ extension MapViewController: LineChartDelegate {
         planSelected = listPlan[lineIndex]
         let listAsset = DatabaseRealmManager.shared.listAllAssetOfPlan(planID: planSelected.id)
         listAllMonthExpensesInMap = getAllMonthExpensesInMap(listAsset: listAsset)
-        listMonthExpensesInYear = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
-            return monthExpenses.year == listAllYearInMap[indexYearSelected]
+        listMonthExpensesInYear1 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[0]
+        })
+        listMonthExpensesInYear2 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[1]
+        })
+        listMonthExpensesInYear3 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[2]
+        })
+        listMonthExpensesInYear4 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[3]
+        })
+        listMonthExpensesInYear5 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[4]
+        })
+        listMonthExpensesInYear6 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[5]
+        })
+        listMonthExpensesInYear7 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[6]
+        })
+        listMonthExpensesInYear8 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[7]
+        })
+        listMonthExpensesInYear9 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[8]
+        })
+        listMonthExpensesInYear10 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[9]
+        })
+        listMonthExpensesInYear11 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[10]
+        })
+        listMonthExpensesInYear12 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[11]
+        })
+        listMonthExpensesInYear13 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[12]
+        })
+        listMonthExpensesInYear14 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[13]
         })
         tableView.reloadData()
     }
     
     func didSelectDataPoint(_ index: Int, lineIndex: Int) {
-        let indexOfPlanSelected = listPlan.firstIndex{$0 === planSelected}
-        if indexOfPlanSelected != lineIndex {
-            planSelected = listPlan[lineIndex]
-            let listAsset = DatabaseRealmManager.shared.listAllAssetOfPlan(planID: planSelected.id)
-            listAllMonthExpensesInMap = getAllMonthExpensesInMap(listAsset: listAsset)
-            listMonthExpensesInYear = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
-                return monthExpenses.year == listAllYearInMap[indexYearSelected]
-            })
-            tableView.reloadData()
-        } else {
-            indexYearSelected = index/12
-            planSelected = listPlan[lineIndex]
-            let listAsset = DatabaseRealmManager.shared.listAllAssetOfPlan(planID: planSelected.id)
-            listAllMonthExpensesInMap = getAllMonthExpensesInMap(listAsset: listAsset)
-            listMonthExpensesInYear = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
-                return monthExpenses.year == listAllYearInMap[indexYearSelected]
-            })
-            tableView.reloadData()
-            scrollToIndex(index: (index % 12))
-        }
+        planSelected = listPlan[lineIndex]
+        let listAsset = DatabaseRealmManager.shared.listAllAssetOfPlan(planID: planSelected.id)
+        listAllMonthExpensesInMap = getAllMonthExpensesInMap(listAsset: listAsset)
+        listMonthExpensesInYear1 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[0]
+        })
+        listMonthExpensesInYear2 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[1]
+        })
+        listMonthExpensesInYear3 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[2]
+        })
+        listMonthExpensesInYear4 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[3]
+        })
+        listMonthExpensesInYear5 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[4]
+        })
+        listMonthExpensesInYear6 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[5]
+        })
+        listMonthExpensesInYear7 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[6]
+        })
+        listMonthExpensesInYear8 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[7]
+        })
+        listMonthExpensesInYear9 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[8]
+        })
+        listMonthExpensesInYear10 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[9]
+        })
+        listMonthExpensesInYear11 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[10]
+        })
+        listMonthExpensesInYear12 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[11]
+        })
+        listMonthExpensesInYear13 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[12]
+        })
+        listMonthExpensesInYear14 = listAllMonthExpensesInMap.filter({ (monthExpenses) -> Bool in
+            return monthExpenses.year == listAllYearInMap[13]
+        })
+        tableView.reloadData()
+        scrollToCell(row: (index % 12), section: (index / 12))
     }
 }
 
 extension MapViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 12
+        return 14
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if listMonthExpensesInYear.count == 0  {
+        switch section {
+        case 0:
+            return listMonthExpensesInYear1.count
+        case 1:
+            return listMonthExpensesInYear2.count
+        case 2:
+            return listMonthExpensesInYear3.count
+        case 3:
+            return listMonthExpensesInYear4.count
+        case 4:
+            return listMonthExpensesInYear5.count
+        case 5:
+            return listMonthExpensesInYear6.count
+        case 6:
+            return listMonthExpensesInYear7.count
+        case 7:
+            return listMonthExpensesInYear8.count
+        case 8:
+            return listMonthExpensesInYear9.count
+        case 9:
+            return listMonthExpensesInYear10.count
+        case 10:
+            return listMonthExpensesInYear11.count
+        case 11:
+            return listMonthExpensesInYear12.count
+        case 12:
+            return listMonthExpensesInYear13.count
+        case 13:
+            return listMonthExpensesInYear14.count
+        default:
             return 0
         }
-        let month = listMonthExpensesInYear[section]
-        if month.isExpand {
-            return 6
-        }
-        return 1
     }
-    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+        let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderSection") as! HeaderSection
+        headerCell.frame = headerView.bounds
+        let yearString = listAllYearInMap[section]
+        headerCell.name.text = yearString
+        headerView.addSubview(headerCell)
+        return headerView
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let item = listMonthExpensesInYear[indexPath.section]
-        if indexPath.row == 0 {
-            // Cell title
+        var item: MonthExpenses!
+        switch indexPath.section {
+        case 0:
+            item = listMonthExpensesInYear1[indexPath.row]
+            break
+        case 1:
+            item = listMonthExpensesInYear2[indexPath.row]
+            break
+        case 2:
+            item = listMonthExpensesInYear3[indexPath.row]
+            break
+        case 3:
+            item = listMonthExpensesInYear4[indexPath.row]
+            break
+        case 4:
+            item = listMonthExpensesInYear5[indexPath.row]
+            break
+        case 5:
+            item = listMonthExpensesInYear6[indexPath.row]
+            break
+        case 6:
+            item = listMonthExpensesInYear7[indexPath.row]
+            break
+        case 7:
+            item = listMonthExpensesInYear8[indexPath.row]
+            break
+        case 8:
+            item = listMonthExpensesInYear9[indexPath.row]
+            break
+        case 9:
+            item = listMonthExpensesInYear10[indexPath.row]
+            break
+        case 10:
+            item = listMonthExpensesInYear11[indexPath.row]
+            break
+        case 11:
+            item = listMonthExpensesInYear12[indexPath.row]
+            break
+        case 12:
+            item = listMonthExpensesInYear13[indexPath.row]
+            break
+        case 13:
+            item = listMonthExpensesInYear14[indexPath.row]
+            break
+        default:
+            break
+        }
+        if item.tag == 0 {
+            // cell title
             let cell = tableView.dequeueReusableCell(withIdentifier: String.className(MonthTitleCell.self)) as! MonthTitleCell
             cell.configCell(item: item)
-            
             return cell
-        } else if indexPath.row == 1 {
-            // Cell detail
-            let cell = tableView.dequeueReusableCell(withIdentifier: String.className(MonthDetailCell.self)) as! MonthDetailCell
-            cell.configIncomeCell(item: item)
+        } else if item.tag == 1 {
+            // cell different
+            let cell = tableView.dequeueReusableCell(withIdentifier: String.className(DifferenceCell.self)) as! DifferenceCell
+            cell.configDifferenceCell(item: item)
             return cell
-        } else if indexPath.row == 2 {
-            // Cell detail
-            let cell = tableView.dequeueReusableCell(withIdentifier: String.className(MonthDetailCell.self)) as! MonthDetailCell
-            cell.configExpensesCell(item: item)
-            
-            return cell
-        } else if indexPath.row == 3 {
+        } else if item.tag == 2 {
+            // cell starting
             let cell = tableView.dequeueReusableCell(withIdentifier: String.className(MonthDetailCell.self)) as! MonthDetailCell
             cell.configStartingCell(item: item)
-            
             return cell
-        } else if indexPath.row == 4 {
+        } else if item.tag == 3 {
+            // cell ending
             let cell = tableView.dequeueReusableCell(withIdentifier: String.className(MonthDetailCell.self)) as! MonthDetailCell
             cell.configEndingCell(item: item)
-            
             return cell
-        } else {
+        } else if item.tag == 4 {
+            // cell button
             let cell = tableView.dequeueReusableCell(withIdentifier: String.className(ViewExpensesCell.self)) as! ViewExpensesCell
-            
             return cell
         }
+        // default
+        let cell = tableView.dequeueReusableCell(withIdentifier: String.className(MonthTitleCell.self)) as! MonthTitleCell
+        cell.configCell(item: item)
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -567,17 +808,306 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
         return 46
     }
     
-    //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return 46
-    //    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let item = listMonthExpensesInYear[indexPath.section]
+        var item: MonthExpenses!
+        switch indexPath.section {
+        case 0:
+            item = listMonthExpensesInYear1[indexPath.row]
+            break
+        case 1:
+            item = listMonthExpensesInYear2[indexPath.row]
+            break
+        case 2:
+            item = listMonthExpensesInYear3[indexPath.row]
+            break
+        case 3:
+            item = listMonthExpensesInYear4[indexPath.row]
+            break
+        case 4:
+            item = listMonthExpensesInYear5[indexPath.row]
+            break
+        case 5:
+            item = listMonthExpensesInYear6[indexPath.row]
+            break
+        case 6:
+            item = listMonthExpensesInYear7[indexPath.row]
+            break
+        case 7:
+            item = listMonthExpensesInYear8[indexPath.row]
+            break
+        case 8:
+            item = listMonthExpensesInYear9[indexPath.row]
+            break
+        case 9:
+            item = listMonthExpensesInYear10[indexPath.row]
+            break
+        case 10:
+            item = listMonthExpensesInYear11[indexPath.row]
+            break
+        case 11:
+            item = listMonthExpensesInYear12[indexPath.row]
+            break
+        case 12:
+            item = listMonthExpensesInYear13[indexPath.row]
+            break
+        case 13:
+            item = listMonthExpensesInYear14[indexPath.row]
+            break
+        default:
+            break
+        }
+        if item.tag == 0 {
             item.isExpand = !item.isExpand
-            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
-        } else if indexPath.row == 5 {
-            let item = listMonthExpensesInYear[indexPath.section]
+            if item.isExpand {
+                // add new row
+                let itemDifferentAddNew = MonthExpenses()
+                itemDifferentAddNew.tag = 1
+                itemDifferentAddNew.indexMonth = item.indexMonth
+                itemDifferentAddNew.month = item.month
+                itemDifferentAddNew.year = item.year
+                itemDifferentAddNew.income = item.income
+                itemDifferentAddNew.expenses = item.expenses
+                itemDifferentAddNew.starting = item.starting
+                itemDifferentAddNew.ending = item.ending
+                itemDifferentAddNew.ending = item.ending
+                itemDifferentAddNew.isExpand = false
+                itemDifferentAddNew.listPayment = item.listPayment
+                
+                let itemStartAddNew = MonthExpenses()
+                itemStartAddNew.tag = 2
+                itemStartAddNew.indexMonth = item.indexMonth
+                itemStartAddNew.month = item.month
+                itemStartAddNew.year = item.year
+                itemStartAddNew.income = item.income
+                itemStartAddNew.expenses = item.expenses
+                itemStartAddNew.starting = item.starting
+                itemStartAddNew.ending = item.ending
+                itemStartAddNew.ending = item.ending
+                itemStartAddNew.isExpand = false
+                itemStartAddNew.listPayment = item.listPayment
+                
+                let itemEndingAddNew = MonthExpenses()
+                itemEndingAddNew.tag = 3
+                itemEndingAddNew.indexMonth = item.indexMonth
+                itemEndingAddNew.month = item.month
+                itemEndingAddNew.year = item.year
+                itemEndingAddNew.income = item.income
+                itemEndingAddNew.expenses = item.expenses
+                itemEndingAddNew.starting = item.starting
+                itemEndingAddNew.ending = item.ending
+                itemEndingAddNew.ending = item.ending
+                itemEndingAddNew.isExpand = false
+                itemEndingAddNew.listPayment = item.listPayment
+                
+                let itemButtonAddNew = MonthExpenses()
+                itemButtonAddNew.tag = 4
+                itemButtonAddNew.indexMonth = item.indexMonth
+                itemButtonAddNew.month = item.month
+                itemButtonAddNew.year = item.year
+                itemButtonAddNew.income = item.income
+                itemButtonAddNew.expenses = item.expenses
+                itemButtonAddNew.starting = item.starting
+                itemButtonAddNew.ending = item.ending
+                itemButtonAddNew.ending = item.ending
+                itemButtonAddNew.isExpand = false
+                itemButtonAddNew.listPayment = item.listPayment
+                
+                switch indexPath.section {
+                case 0:
+                    listMonthExpensesInYear1.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear1.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear1.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear1.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 1:
+                    listMonthExpensesInYear2.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear2.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear2.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear2.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 2:
+                    listMonthExpensesInYear3.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear3.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear3.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear3.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 3:
+                    listMonthExpensesInYear4.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear4.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear4.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear4.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 4:
+                    listMonthExpensesInYear5.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear5.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear5.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear5.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 5:
+                    listMonthExpensesInYear6.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear6.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear6.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear6.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 6:
+                    listMonthExpensesInYear7.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear7.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear7.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear7.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 7:
+                    listMonthExpensesInYear8.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear8.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear8.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear8.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 8:
+                    listMonthExpensesInYear9.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear9.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear9.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear9.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 9:
+                    listMonthExpensesInYear10.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear10.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear10.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear10.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 10:
+                    listMonthExpensesInYear11.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear11.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear11.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear11.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 11:
+                    listMonthExpensesInYear12.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear12.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear12.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear12.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 12:
+                    listMonthExpensesInYear13.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear13.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear13.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear13.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                case 13:
+                    listMonthExpensesInYear14.insert(itemDifferentAddNew, at: indexPath.row + 1)
+                    listMonthExpensesInYear14.insert(itemStartAddNew, at: indexPath.row + 2)
+                    listMonthExpensesInYear14.insert(itemEndingAddNew, at: indexPath.row + 3)
+                    listMonthExpensesInYear14.insert(itemButtonAddNew, at: indexPath.row + 4)
+                    break
+                default:
+                    break
+                }
+                
+                let listNewCell = [IndexPath.init(row: indexPath.row + 1, section: indexPath.section), IndexPath.init(row: indexPath.row + 2, section: indexPath.section), IndexPath.init(row: indexPath.row + 3, section: indexPath.section), IndexPath.init(row: indexPath.row + 4, section: indexPath.section)]
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: listNewCell, with: .none)
+                self.tableView.reloadRows(at: [IndexPath.init(row: indexPath.row, section: indexPath.section)], with: .none)
+                self.tableView.endUpdates()
+            } else {
+                // delete cell
+                switch indexPath.section {
+                case 0:
+                    listMonthExpensesInYear1.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear1.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear1.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear1.remove(at: indexPath.row + 1)
+                    break
+                case 1:
+                    listMonthExpensesInYear2.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear2.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear2.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear2.remove(at: indexPath.row + 1)
+                    break
+                case 2:
+                    listMonthExpensesInYear3.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear3.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear3.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear3.remove(at: indexPath.row + 1)
+                    break
+                case 3:
+                    listMonthExpensesInYear4.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear4.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear4.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear4.remove(at: indexPath.row + 1)
+                    break
+                case 4:
+                    listMonthExpensesInYear5.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear5.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear5.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear5.remove(at: indexPath.row + 1)
+                    break
+                case 5:
+                    listMonthExpensesInYear6.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear6.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear6.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear6.remove(at: indexPath.row + 1)
+                    break
+                case 6:
+                    listMonthExpensesInYear7.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear7.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear7.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear7.remove(at: indexPath.row + 1)
+                    break
+                case 7:
+                    listMonthExpensesInYear8.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear8.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear8.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear8.remove(at: indexPath.row + 1)
+                    break
+                case 8:
+                    listMonthExpensesInYear9.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear9.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear9.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear9.remove(at: indexPath.row + 1)
+                    break
+                case 9:
+                    listMonthExpensesInYear10.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear10.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear10.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear10.remove(at: indexPath.row + 1)
+                    break
+                case 10:
+                    listMonthExpensesInYear11.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear11.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear11.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear11.remove(at: indexPath.row + 1)
+                    break
+                case 11:
+                    listMonthExpensesInYear12.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear12.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear12.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear12.remove(at: indexPath.row + 1)
+                    break
+                case 12:
+                    listMonthExpensesInYear13.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear13.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear13.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear13.remove(at: indexPath.row + 1)
+                    break
+                case 13:
+                    listMonthExpensesInYear14.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear14.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear14.remove(at: indexPath.row + 1)
+                    listMonthExpensesInYear14.remove(at: indexPath.row + 1)
+                    break
+                default:
+                    break
+                }
+                
+                let listDeleteCell = [IndexPath.init(row: indexPath.row + 1, section: indexPath.section), IndexPath.init(row: indexPath.row + 2, section: indexPath.section), IndexPath.init(row: indexPath.row + 3, section: indexPath.section), IndexPath.init(row: indexPath.row + 4, section: indexPath.section)]
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: listDeleteCell, with: .fade)
+                self.tableView.reloadRows(at: [IndexPath.init(row: indexPath.row, section: indexPath.section)], with: .none)
+                self.tableView.endUpdates()
+            }
+        }
+        
+        if item.tag == 4 {
+            indexYearSelected = indexPath.section
+            indexMonthSelected = indexPath.row - 4
             let vc = MonthViewController.newInstance()
             vc.expensesMonth = item
             vc.planParent = planSelected
@@ -587,16 +1117,11 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MapViewController {
-    private func scrollToIndex(index: Int) {
-        for item in listMonthExpensesInYear {
+    private func scrollToCell(row: Int, section: Int) {
+        for item in listAllMonthExpensesInMap {
             item.isExpand = false
         }
-        let item = listMonthExpensesInYear[index]
-        item.isExpand = true
-//        tableView.reloadSections(IndexSet(integer: index), with: .none)
-        tableView.reloadData()
-        
-        let row = IndexPath(row: 0, section: index)
+        let row = IndexPath(row: row, section: section)
         self.tableView.scrollToRow(at: row,
                                    at: .top,
                                    animated: true)

@@ -84,51 +84,6 @@ class Common {
         return listData
     }
     
-    static func showAlert(type: kAlertType = .error,
-                          title: String = "",
-                          content: String,
-                          completeActionTitle: String = "OK",
-                          cancelActionTitle: String = "Cancle",
-                          showCancelAction: Bool = false,
-                          completion: (() -> Void)? = nil,
-                          close: (() -> Void)? = nil) {
-        
-        let alert = FCAlertView()
-        
-        switch type {
-        case .error:
-            alert.makeAlertTypeWarning()
-            break
-        case .warning:
-            alert.makeAlertTypeCaution()
-            break
-        case .success:
-            alert.makeAlertTypeSuccess()
-        case .progress:
-            alert.makeAlertTypeProgress()
-        }
-        
-        if showCancelAction {
-            alert.addButton(cancelActionTitle) {
-                if close != nil {
-                    close!()
-                }
-            }
-        }
-        
-        alert.doneBlock = {
-            if completion != nil {
-                completion!()
-            }
-        }
-        
-        alert.showAlert(withTitle: title,
-                        withSubtitle: content,
-                        withCustomImage: nil,
-                        withDoneButtonTitle: completeActionTitle,
-                        andButtons: nil)
-    }
-    
     static func storeObjectToUserDefault(_ object: AnyObject, key: String) {
         let dataSave = NSKeyedArchiver.archivedData(withRootObject: object)
         UserDefaults.standard.set(dataSave, forKey: key)

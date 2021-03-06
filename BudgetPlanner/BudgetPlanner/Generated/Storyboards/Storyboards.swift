@@ -17,6 +17,8 @@ internal enum StoryboardScene {
 
     internal static let initialScene = InitialSceneType<MapViewController>(storyboard: Main.self)
 
+    internal static let addVariantViewController = SceneType<AddVariantViewController>(storyboard: Main.self, identifier: "AddVariantViewController")
+
     internal static let assetDetailViewController = SceneType<AssetDetailViewController>(storyboard: Main.self, identifier: "AssetDetailViewController")
 
     internal static let mapViewController = SceneType<MapViewController>(storyboard: Main.self, identifier: "MapViewController")

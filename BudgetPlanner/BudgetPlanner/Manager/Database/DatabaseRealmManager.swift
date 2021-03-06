@@ -185,6 +185,21 @@ class DatabaseRealmManager: NSObject {
     }
     
     //MARK:- Update
+    // update Asset
+    func editAssetName(newAsset: Asset) {
+        
+        guard let assetDB = realm.objects(TBAsset.self).filter({$0.id == newAsset.id}).first else { return }
+        DispatchQueue.main.async {
+            
+            try! self.realm.write {
+                assetDB.name = newAsset.name
+                print("Update asset success")
+            }
+            NotificationCenter.default.post(name: Notification.Name(NotificationCenterName.updateAssetSuccess), object: nil)
+        }
+
+    }
+    
     // update Payment
     func editPayment(newPayment: Payment) {
         
@@ -226,9 +241,36 @@ class DatabaseRealmManager: NSObject {
             NotificationCenter.default.post(name: Notification.Name(NotificationCenterName.deletePlanSuccess), object: nil)
         }
     }
+    func removeAsset(id: String) {
+        
+        guard let asset = realm.objects(TBAsset.self).filter({$0.id == id}).first else { return }
+        
+        DispatchQueue.main.async {
+            
+            try! self.realm.write {
+                print("Delete asset success")
+                self.realm.delete(asset)
+            }
+            
+            NotificationCenter.default.post(name: Notification.Name(NotificationCenterName.deleteAssetSuccess), object: nil)
+        }
+    }
+    func removePayment(id: String) {
+        
+        guard let payment = realm.objects(TBPayment.self).filter({$0.id == id}).first else { return }
+        
+        DispatchQueue.main.async {
+            
+            try! self.realm.write {
+                print("Delete payment success")
+                self.realm.delete(payment)
+            }
+            
+            NotificationCenter.default.post(name: Notification.Name(NotificationCenterName.deletePaymentSuccess), object: nil)
+        }
+    }
     
     //MARK:- List
-    
     func listAllPlan() -> [Plan] {
         var listData:[Plan] = []
         let listPlan = realm.objects(TBPlan.self).sorted {$0.createDate > $1.createDate}
