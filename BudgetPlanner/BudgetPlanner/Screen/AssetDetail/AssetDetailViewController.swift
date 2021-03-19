@@ -111,7 +111,7 @@ extension AssetDetailViewController {
         let ac = UIAlertController(title: "Group Name", message: "Change group name", preferredStyle: .alert)
         ac.addTextField()
         
-        let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
             // do something
         }
         let actionOK = UIAlertAction(title: "Change", style: .default) { [unowned ac] _ in
@@ -127,7 +127,7 @@ extension AssetDetailViewController {
             DatabaseRealmManager.shared.editAssetName(newAsset: self.asset)
         }
         
-        ac.addAction(actionCancle)
+        ac.addAction(actionCancel)
         ac.addAction(actionOK)
         present(ac, animated: true)
     }
@@ -181,19 +181,17 @@ extension AssetDetailViewController: UITableViewDelegate, UITableViewDataSource 
             
             let ac = UIAlertController(title: "Alert", message: "Are you sure want to delete this transaction(" + payment.name + ")?", preferredStyle: .alert)
             
-            let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+            let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
                 // do something
             }
-            actionCancle.setValue(UIColor.red, forKey: "titleTextColor")
             let actionOK = UIAlertAction(title: "Yes", style: .default) { _ in
                 LoadingManager.show(in: self)
                 DatabaseRealmManager.shared.removePayment(id: payment.id)
                 self.asset.payments.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
             }
-            actionOK.setValue(UIColor.blue, forKey: "titleTextColor")
             ac.addAction(actionOK)
-            ac.addAction(actionCancle)
+            ac.addAction(actionCancel)
             present(ac, animated: true)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

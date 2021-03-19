@@ -79,6 +79,11 @@ class PaymentViewController: BaseViewController {
             
             // set oldPayment status
             paymentOld.name = assetParent.name
+            categorySelected = Common.listPaymentType()[4]
+            paymentOld.typeName = categorySelected.name
+            paymentOld.type = categorySelected.type
+            paymentOld.imageName = categorySelected.imageName
+            lbType.text = categorySelected.name
             paymentOld.startDay = "01"
             paymentOld.startMonth = expensesMonth.indexMonth
             paymentOld.startYear = expensesMonth.year
@@ -105,32 +110,28 @@ class PaymentViewController: BaseViewController {
         if checkIsChangeValue() && txtName.text != "" && txtAmount.text != "" {
             let ac = UIAlertController(title: "Alert", message: "Do you want to save before leaving?", preferredStyle: .alert)
             
-            let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+            let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
                 // do something
                 self.navigationController?.popViewController(animated: true)
             }
-            actionCancle.setValue(UIColor.red, forKey: "titleTextColor")
             let actionOK = UIAlertAction(title: "Save", style: .default) { _ in
                 self.save()
             }
-            actionOK.setValue(UIColor.blue, forKey: "titleTextColor")
             ac.addAction(actionOK)
-            ac.addAction(actionCancle)
+            ac.addAction(actionCancel)
             present(ac, animated: true)
         } else if checkIsChangeValue() && (txtName.text == "" || txtAmount.text == "") {
             let ac = UIAlertController(title: "Alert", message: "Do you want to leave without saving?", preferredStyle: .alert)
             
-            let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+            let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
                 // back without saving
                 self.navigationController?.popViewController(animated: true)
             }
-            actionCancle.setValue(UIColor.red, forKey: "titleTextColor")
             let actionOK = UIAlertAction(title: "Stay", style: .default) { _ in
                 return
             }
-            actionOK.setValue(UIColor.blue, forKey: "titleTextColor")
             ac.addAction(actionOK)
-            ac.addAction(actionCancle)
+            ac.addAction(actionCancel)
             present(ac, animated: true)
         } else {
             navigationController?.popViewController(animated: true)
@@ -155,7 +156,7 @@ class PaymentViewController: BaseViewController {
                     textFieldEndDate.text = paymentExist.endDay + "/" + paymentExist.endMonth + "/" + paymentExist.endYear
                     textFieldEndDate.minDate = nextMonth
                 } else {
-                    textFieldEndDate.text = nextMonth
+                    textFieldEndDate.text = KEY_INFINITY
                     textFieldEndDate.minDate = nextMonth
                 }
                 textFieldEndDate.dateSelected = nextMonth
@@ -175,7 +176,7 @@ class PaymentViewController: BaseViewController {
                     startDateSelected = Date().convertStringToDate(lbStartDate.text!, "dd/MM/yyyy")
                 }
                 let nextMonth = startDateSelected.getNextMonth()
-                textFieldEndDate.text = nextMonth
+                textFieldEndDate.text = KEY_INFINITY
                 textFieldEndDate.minDate = nextMonth
                 textFieldEndDate.dateSelected = nextMonth
             } else {

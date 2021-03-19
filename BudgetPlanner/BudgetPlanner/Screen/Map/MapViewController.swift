@@ -288,6 +288,7 @@ class MapViewController: BaseViewController {
             return monthExpenses.year == listAllYearInMap[13]
         })
         tableView.reloadData()
+        scrollToCell(row: indexMonthSelected, section: indexYearSelected)
     }
 }
 
@@ -857,8 +858,11 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
             break
         }
         if item.tag == 0 {
+            // expand colapse cell
             item.isExpand = !item.isExpand
             if item.isExpand {
+                // scroll cell to top
+                scrollToCell(row: indexPath.row, section: indexPath.section)
                 // add new row
                 let itemDifferentAddNew = MonthExpenses()
                 itemDifferentAddNew.tag = 1
@@ -1118,9 +1122,9 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MapViewController {
     private func scrollToCell(row: Int, section: Int) {
-        for item in listAllMonthExpensesInMap {
-            item.isExpand = false
-        }
+//        for item in listAllMonthExpensesInMap {
+//            item.isExpand = false
+//        }
         let row = IndexPath(row: row, section: section)
         self.tableView.scrollToRow(at: row,
                                    at: .top,

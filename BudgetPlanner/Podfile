@@ -7,13 +7,10 @@ target 'BudgetPlanner' do
 
   # Pods for BudgetPlanner
 pod 'IQKeyboardManager', '6.2.1'
-pod 'Kingfisher', '4.10.0'
 pod 'Swinject', '2.6.0'
 pod 'FCFileManager'
 pod 'JGProgressHUD'
 pod 'RealmSwift'
-pod 'FCAlertView', '1.4.0'
-pod 'SDCAlertView'
 pod 'ActionSheetPicker-3.0'
 #pod 'R.swift'
 

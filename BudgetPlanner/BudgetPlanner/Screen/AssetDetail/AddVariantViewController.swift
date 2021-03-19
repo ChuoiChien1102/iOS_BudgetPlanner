@@ -18,7 +18,7 @@ class AddVariantViewController: BaseViewController {
         // Do any additional setup after loading the view.
         let number = UserDefaults.standard.integer(forKey: KEY_NUMBER_VARIANT)
         // case create variant
-        navigationBar.titleLabel.text = "New group " + String(number)
+        navigationBar.titleLabel.text = "New variant"
         asset.name = navigationBar.titleLabel.text!
         navigationBar.leftButton.isHidden = false
         navigationBar.backLabel.isHidden = false
@@ -50,7 +50,7 @@ class AddVariantViewController: BaseViewController {
         let ac = UIAlertController(title: "Group Name", message: "Change group name", preferredStyle: .alert)
         ac.addTextField()
         
-        let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
             // do something
         }
         let actionOK = UIAlertAction(title: "Change", style: .default) { _ in
@@ -64,7 +64,7 @@ class AddVariantViewController: BaseViewController {
             self.asset.name = name
         }
         
-        ac.addAction(actionCancle)
+        ac.addAction(actionCancel)
         ac.addAction(actionOK)
         present(ac, animated: true)
     }

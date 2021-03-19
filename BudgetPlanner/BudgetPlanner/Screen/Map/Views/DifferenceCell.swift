@@ -11,8 +11,6 @@ class DifferenceCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var total: UILabel!
-    @IBOutlet weak var iconRight: UIImageView!
-    
     @IBOutlet weak var viewSeperator: UIView!
     
     override func awakeFromNib() {
@@ -32,15 +30,10 @@ class DifferenceCell: UITableViewCell {
         total.text = String(totalDifference) + " $"
         if totalDifference > 0 {
             total.textColor = UIColor.init(hex: "#4FBE40")
-            iconRight.image = UIImage(named: "ic_arrow_green")
-            iconRight.isHidden = false
         } else if totalDifference < 0 {
             total.textColor = .red
-            iconRight.image = UIImage(named: "ic_arrow_red")
-            iconRight.isHidden = false
         } else {
             total.textColor = .gray
-            iconRight.isHidden = true
         }
     }
 }

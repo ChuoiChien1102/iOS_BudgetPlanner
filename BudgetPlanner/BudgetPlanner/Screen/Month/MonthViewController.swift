@@ -120,7 +120,7 @@ class MonthViewController: BaseViewController {
         let ac = UIAlertController(title: "Group Name", message: "Please name your payment", preferredStyle: .alert)
         ac.addTextField()
         
-        let actionCancle = UIAlertAction(title: "Cancle", style: .default) { _ in
+        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
             // do something
         }
         let actionOK = UIAlertAction(title: "Create", style: .default) { [unowned ac] _ in
@@ -139,7 +139,7 @@ class MonthViewController: BaseViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        ac.addAction(actionCancle)
+        ac.addAction(actionCancel)
         ac.addAction(actionOK)
         present(ac, animated: true)
     }

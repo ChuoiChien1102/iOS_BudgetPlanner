@@ -40,7 +40,7 @@ class DatabaseRealmManager: NSObject {
         var config = Realm.Configuration()
         FCFileManager.createDirectories(forPath: FolderPath.database)
         // Use the default directory, but replace the filename with the username
-        config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(FolderPath.database)/chien.realm")
+        config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(FolderPath.database)/realmdb.realm")
         
         // Set this as the configuration used for the default Realm
         Realm.Configuration.defaultConfiguration = config
@@ -273,7 +273,7 @@ class DatabaseRealmManager: NSObject {
     //MARK:- List
     func listAllPlan() -> [Plan] {
         var listData:[Plan] = []
-        let listPlan = realm.objects(TBPlan.self).sorted {$0.createDate > $1.createDate}
+        let listPlan = realm.objects(TBPlan.self).sorted {$0.createDate < $1.createDate}
         
         for item in listPlan {
             let plan = Plan.init()
